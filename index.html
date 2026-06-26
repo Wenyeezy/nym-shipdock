@@ -800,7 +800,7 @@ a { color: var(--color-link, var(--color-primary)); }</style>
     <script>
         // ===== CONFIG =====
         // Replace with your Google Apps Script Web App URL when ready
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbz6MVNb8Ze7GfreJuY8JaDxXCDMQxUn3pLwfwfbUeit9s5TJ2RJiV2zUlCUSggEDjiDaA/exec';
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzcCeGW_qS6hkrd7Qvr7lBWw7QYpee7GcLbdp_HEiq-0C6nU37K05fOSZflxj_iiBdxfw/exec';
         const SITE = 'MDW7';
 
         // ===== LOCAL STORAGE (fallback when no backend) =====
@@ -829,12 +829,11 @@ a { color: var(--color-link, var(--color-primary)); }</style>
 
             // Try to send to backend if configured
             if (BACKEND_URL) {
-                fetch(BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify(entry)
-                }).catch(() => {});
+                // Image beacon — works on ALL devices/browsers/networks
+                // No CORS issues, no redirect issues, no iframe issues
+                var img = new Image();
+                var params = '?action=write&data=' + encodeURIComponent(JSON.stringify(entry));
+                img.src = BACKEND_URL + params;
             }
         }
 
