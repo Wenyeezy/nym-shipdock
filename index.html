@@ -605,8 +605,7 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Your Station</label>
             <select id="checkin-station">
                 <option value="">Select your station...</option>
-                <optgroup label="Induct — Flat Sorter">
-                    <option value="Induct 1">Induct 1 (South)</option>
+                <option value="Induct 1">Induct 1 (South)</option>
                     <option value="Induct 2">Induct 2 (South)</option>
                     <option value="Induct 3">Induct 3 (South)</option>
                     <option value="Induct 4">Induct 4 (South)</option>
@@ -614,18 +613,18 @@ a { color: var(--color-link, var(--color-primary)); }</style>
                     <option value="Induct 6">Induct 6 (North)</option>
                     <option value="Induct 7">Induct 7 (North)</option>
                     <option value="Induct 8">Induct 8 (North)</option>
-                </optgroup>
-                <optgroup label="Induct — Y Sorter">
                     <option value="Y-Sorter Y1">Y-Sorter Y1</option>
                     <option value="Y-Sorter Y2">Y-Sorter Y2</option>
                     <option value="Y-Sorter Y3">Y-Sorter Y3</option>
                     <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                </optgroup>
-                <optgroup label="Other Stations">
                     <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider</option>
+                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
                     <option value="Tote Replenishment">Tote Replenishment</option>
-                </optgroup>
+                    <option disabled="">──────────</option>
+                    <option value="Sort Water Spider">Sort Water Spider</option>
+                    <option value="Container Builder">Container Builder / Palletizer</option>
+                    <option value="Tranship">Tranship</option>
+                    <option value="Liquid">Liquid</option>
             </select>
         </div>
 
@@ -691,8 +690,7 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Current station</label>
             <select id="temp-station">
                 <option value="">Select station...</option>
-                <optgroup label="Induct — Flat Sorter">
-                    <option value="Induct 1">Induct 1 (South)</option>
+                <option value="Induct 1">Induct 1 (South)</option>
                     <option value="Induct 2">Induct 2 (South)</option>
                     <option value="Induct 3">Induct 3 (South)</option>
                     <option value="Induct 4">Induct 4 (South)</option>
@@ -700,18 +698,18 @@ a { color: var(--color-link, var(--color-primary)); }</style>
                     <option value="Induct 6">Induct 6 (North)</option>
                     <option value="Induct 7">Induct 7 (North)</option>
                     <option value="Induct 8">Induct 8 (North)</option>
-                </optgroup>
-                <optgroup label="Induct — Y Sorter">
                     <option value="Y-Sorter Y1">Y-Sorter Y1</option>
                     <option value="Y-Sorter Y2">Y-Sorter Y2</option>
                     <option value="Y-Sorter Y3">Y-Sorter Y3</option>
                     <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                </optgroup>
-                <optgroup label="Other Stations">
                     <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider</option>
+                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
                     <option value="Tote Replenishment">Tote Replenishment</option>
-                </optgroup>
+                    <option disabled="">──────────</option>
+                    <option value="Sort Water Spider">Sort Water Spider</option>
+                    <option value="Container Builder">Container Builder / Palletizer</option>
+                    <option value="Tranship">Tranship</option>
+                    <option value="Liquid">Liquid</option>
             </select>
         </div>
 
@@ -740,8 +738,7 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Current station</label>
             <select id="update-station">
                 <option value="">Select station...</option>
-                <optgroup label="Induct — Flat Sorter">
-                    <option value="Induct 1">Induct 1 (South)</option>
+                <option value="Induct 1">Induct 1 (South)</option>
                     <option value="Induct 2">Induct 2 (South)</option>
                     <option value="Induct 3">Induct 3 (South)</option>
                     <option value="Induct 4">Induct 4 (South)</option>
@@ -749,18 +746,18 @@ a { color: var(--color-link, var(--color-primary)); }</style>
                     <option value="Induct 6">Induct 6 (North)</option>
                     <option value="Induct 7">Induct 7 (North)</option>
                     <option value="Induct 8">Induct 8 (North)</option>
-                </optgroup>
-                <optgroup label="Induct — Y Sorter">
                     <option value="Y-Sorter Y1">Y-Sorter Y1</option>
                     <option value="Y-Sorter Y2">Y-Sorter Y2</option>
                     <option value="Y-Sorter Y3">Y-Sorter Y3</option>
                     <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                </optgroup>
-                <optgroup label="Other Stations">
                     <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider</option>
+                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
                     <option value="Tote Replenishment">Tote Replenishment</option>
-                </optgroup>
+                    <option disabled="">──────────</option>
+                    <option value="Sort Water Spider">Sort Water Spider</option>
+                    <option value="Container Builder">Container Builder / Palletizer</option>
+                    <option value="Tranship">Tranship</option>
+                    <option value="Liquid">Liquid</option>
             </select>
         </div>
 
@@ -853,6 +850,12 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             document.getElementById('success-title').textContent = title;
             document.getElementById('success-msg').textContent = msg;
             showPage('page-success');
+
+            // Auto-return to home after 3 seconds + clear saved login for privacy
+            setTimeout(function() {
+                showPage('page-home');
+                clearForms();
+            }, 3000);
         }
 
         // ===== PLAN SELECTION =====
@@ -921,9 +924,10 @@ a { color: var(--color-link, var(--color-primary)); }</style>
         }
 
         function submitImBack() {
-            const login = hasStorage ? (function(){ try { return localStorage.getItem('nym_login'); } catch(e) { return null; } })() : null;
+            const login = null; // Always ask for login (privacy)
             if (!login) {
-                const input = prompt('Enter your login:');
+                var input;
+                try { input = prompt('Enter your login:'); } catch(e) { input = null; }
                 if (!input) return;
                 if (hasStorage) try { localStorage.setItem('nym_login', input); } catch(e) {}
                 saveEntry({ type: 'im_back', login: input });
@@ -959,13 +963,39 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             showSuccess('✏️', 'Updated!', `${login} — now ${time}`);
         }
 
-        // ===== AUTO-FILL LOGIN =====
-        window.addEventListener('DOMContentLoaded', () => {
-            const saved = hasStorage ? (function(){ try { return localStorage.getItem('nym_login'); } catch(e) { return null; } })() : null;
-            if (saved) {
-                document.getElementById('checkin-login').value = saved;
-                document.getElementById('temp-login').value = saved;
-                document.getElementById('update-login').value = saved;
+
+        // ===== CLEAR FORMS (reset selections, keep login) =====
+        function clearForms() {
+            // Re-fill login from storage (don't blank it)
+            var saved = '';
+            if (hasStorage) try { saved = localStorage.getItem('nym_login') || ''; } catch(e) {}
+            document.getElementById('checkin-login').value = saved;
+            document.getElementById('temp-login').value = saved;
+            document.getElementById('update-login').value = saved;
+            document.getElementById('checkin-station').value = '';
+            document.getElementById('checkin-time').value = '';
+            document.getElementById('update-time').value = '';
+            selectedPlan = '';
+            document.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+            document.querySelectorAll('.toggle-btn').forEach(function(b) { b.classList.remove('selected'); });
+            document.getElementById('checkin-time-group').classList.add('hidden');
+            document.getElementById('temp-station-group').classList.add('hidden');
+            document.getElementById('update-station-group').classList.add('hidden');
+            // Keep login saved — it's local to each phone (no privacy issue)
+        }
+
+        // ===== AUTO-FILL LOGIN ON LOAD =====
+        window.addEventListener('DOMContentLoaded', function() {
+            // Auto-fill login from localStorage (each phone stores its own)
+            if (hasStorage) {
+                try {
+                    var saved = localStorage.getItem('nym_login');
+                    if (saved) {
+                        document.getElementById('checkin-login').value = saved;
+                        document.getElementById('temp-login').value = saved;
+                        document.getElementById('update-login').value = saved;
+                    }
+                } catch(e) {}
             }
         });
     </script>
