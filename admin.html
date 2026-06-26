@@ -581,10 +581,18 @@ a { color: var(--color-link, var(--color-primary)); }</style>
         function loadData() {
             // If backend is configured, fetch from Google Sheet
             if (BACKEND_URL) {
-                fetch(BACKEND_URL)
-                    .then(r => r.json())
-                    .then(data => renderData(data))
-                    .catch(() => loadLocal());
+                // Use script injection to bypass CORS
+                var script = document.createElement('script');
+                var cbName = '_nymCb' + Date.now();
+                window[cbName] = function(data) {
+                    renderData(data);
+                    delete window[cbName];
+                };
+                // Fallback: try fetch first, if fails use iframe
+                fetch(BACKEND_URL + '?action=read', { redirect: 'follow' })
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) { renderData(data); })
+                    .catch(function() { loadLocal(); });
             } else {
                 loadLocal();
             }
@@ -599,7 +607,7 @@ a { color: var(--color-link, var(--color-primary)); }</style>
         function renderData(entries) {
             // Filter to today only
             const today = new Date().toDateString();
-            const todayEntries = entries.filter(e => new Date(e.timestamp).toDateString() === today);
+            const todayEntries = entries.filter(e => new Date(e.Timestamp).toDateString() === today);
 
             renderStats(todayEntries);
             renderStationGrid(todayEntries);
@@ -608,16 +616,16 @@ a { color: var(--color-link, var(--color-primary)); }</style>
 
         // ===== STATS =====
         function renderStats(entries) {
-            const checkins = entries.filter(e => e.type === 'checkin');
-            const regular = checkins.filter(e => e.plan === 'regular').length;
-            const early = checkins.filter(e => e.plan === 'early').length;
-            const tbd = checkins.filter(e => e.plan === 'tbd').length;
+            const checkins = entries.filter(e => (e.Type === 'checkin'));
+            const regular = checkins.filter(e => e.Plan === 'regular').length;
+            const early = checkins.filter(e => e.Plan === 'early').length;
+            const tbd = checkins.filter(e => e.Plan === 'tbd').length;
 
             // Count currently off-station (temp_leave without matching im_back)
             const tempLeaves = {};
             entries.forEach(e => {
-                if (e.type === 'temp_leave') tempLeaves[e.login] = true;
-                if (e.type === 'im_back') delete tempLeaves[e.login];
+                if (e.Type === 'temp_leave') tempLeaves[e.Login] = true;
+                if (e.Type === 'im_back') delete tempLeaves[e.Login];
             });
 
             document.getElementById('stat-total').textContent = checkins.length;
@@ -634,32 +642,32 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             // Build current state per AA
             const aaState = {};
             entries.forEach(e => {
-                if (e.type === 'checkin') {
-                    aaState[e.login] = {
-                        login: e.login,
-                        station: e.station,
-                        plan: e.plan,
-                        leaveTime: e.leaveTime,
-                        status: e.plan
+                if (e.Type === 'checkin') {
+                    aaState[e.Login] = {
+                        login: e.Login,
+                        station: e.Station,
+                        plan: e.Plan,
+                        leaveTime: e.LeaveTime,
+                        status: e.Plan
                     };
                 }
-                if (e.type === 'update') {
-                    if (aaState[e.login]) {
-                        aaState[e.login].leaveTime = e.newLeaveTime;
-                        aaState[e.login].status = e.newLeaveTime === '🏠 Staying regular' ? 'regular' : 'early';
-                        if (e.newStation) aaState[e.login].station = e.newStation;
+                if (e.Type === 'update') {
+                    if (aaState[e.Login]) {
+                        aaState[e.Login].leaveTime = e.newLeaveTime;
+                        aaState[e.Login].status = e.newLeaveTime === '🏠 Staying regular' ? 'regular' : 'early';
+                        if (e.NewStation) aaState[e.Login].station = e.NewStation;
                     }
                 }
-                if (e.type === 'temp_leave') {
-                    if (aaState[e.login]) {
-                        aaState[e.login].status = 'temp';
-                        if (e.newStation) aaState[e.login].station = e.newStation;
+                if (e.Type === 'temp_leave') {
+                    if (aaState[e.Login]) {
+                        aaState[e.Login].status = 'temp';
+                        if (e.NewStation) aaState[e.Login].station = e.NewStation;
                     } else {
-                        aaState[e.login] = { login: e.login, station: e.newStation || 'Unknown', status: 'temp' };
+                        aaState[e.Login] = { login: e.Login, station: e.NewStation || 'Unknown', status: 'temp' };
                     }
                 }
-                if (e.type === 'im_back') {
-                    if (aaState[e.login]) aaState[e.login].status = aaState[e.login].plan || 'regular';
+                if (e.Type === 'im_back') {
+                    if (aaState[e.Login]) aaState[e.Login].status = aaState[e.Login].plan || 'regular';
                 }
             });
 
@@ -717,21 +725,21 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             }
 
             body.innerHTML = entries.map(e => {
-                const time = new Date(e.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-                const typeLabel = e.type === 'checkin' ? 'CHECK-IN' :
-                                  e.type === 'temp_leave' ? 'TEMP LEAVE' :
-                                  e.type === 'im_back' ? "I'M BACK" : 'UPDATE';
+                const time = new Date(e.Timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                const typeLabel = e.Type === 'checkin' ? 'CHECK-IN' :
+                                  e.Type === 'temp_leave' ? 'TEMP LEAVE' :
+                                  e.Type === 'im_back' ? "I'M BACK" : 'UPDATE';
                 let details = '';
-                if (e.type === 'checkin') details = `Plan: ${e.plan} ${e.leaveTime ? '@ ' + e.leaveTime : ''}`;
-                if (e.type === 'update') details = `New time: ${e.newLeaveTime}`;
-                if (e.type === 'temp_leave') details = 'Stepped off station';
-                if (e.type === 'im_back') details = 'Back on station';
+                if (e.Type === 'checkin') details = `Plan: ${e.Plan} ${e.LeaveTime ? '@ ' + e.LeaveTime : ''}`;
+                if (e.Type === 'update') details = `New time: ${e.newLeaveTime}`;
+                if (e.Type === 'temp_leave') details = 'Stepped off station';
+                if (e.Type === 'im_back') details = 'Back on station';
 
                 return `<tr>
                     <td>${time}</td>
-                    <td><span class="log-type type-${e.type}">${typeLabel}</span></td>
-                    <td><strong>${e.login || '—'}</strong></td>
-                    <td>${e.station || e.newStation || '—'}</td>
+                    <td><span class="log-type type-${e.Type}">${typeLabel}</span></td>
+                    <td><strong>${e.Login || '—'}</strong></td>
+                    <td>${e.Station || e.NewStation || '—'}</td>
                     <td>${details}</td>
                 </tr>`;
             }).join('');
