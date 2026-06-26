@@ -615,6 +615,27 @@ a { color: var(--color-link, var(--color-primary)); }</style>
         }
 
         // ===== STATS =====
+
+        // Helper: fix time values that got auto-formatted by Google Sheets
+        function fixTime(val) {
+            if (!val) return '';
+            var s = String(val);
+            // If it's a 1899 ISO date (Sheet auto-formatted time), extract the time
+            if (s.indexOf('1899') !== -1 || s.indexOf('1900') !== -1) {
+                try {
+                    var d = new Date(s);
+                    var h = d.getUTCHours();
+                    var m = d.getUTCMinutes();
+                    var ampm = h >= 12 ? 'PM' : 'AM';
+                    h = h % 12 || 12;
+                    return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+                } catch(e) { return s; }
+            }
+            // Remove leading apostrophe if present
+            if (s.charAt(0) === "'") return s.slice(1);
+            return s;
+        }
+
         function renderStats(entries) {
             const checkins = entries.filter(e => (e.Type === 'checkin'));
             const regular = checkins.filter(e => e.Plan === 'regular').length;
@@ -730,8 +751,8 @@ a { color: var(--color-link, var(--color-primary)); }</style>
                                   e.Type === 'temp_leave' ? 'TEMP LEAVE' :
                                   e.Type === 'im_back' ? "I'M BACK" : 'UPDATE';
                 let details = '';
-                if (e.Type === 'checkin') details = `Plan: ${e.Plan} ${e.LeaveTime ? '@ ' + e.LeaveTime : ''}`;
-                if (e.Type === 'update') details = `New time: ${e.newLeaveTime}`;
+                if (e.Type === 'checkin') details = `Plan: ${e.Plan} ${e.LeaveTime ? '@ ' + fixTime(e.LeaveTime) : ''}`;
+                if (e.Type === 'update') details = `New time: ${fixTime(e.Plan || e.newLeaveTime)}`;
                 if (e.Type === 'temp_leave') details = 'Stepped off station';
                 if (e.Type === 'im_back') details = 'Back on station';
 
