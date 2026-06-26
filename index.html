@@ -605,26 +605,31 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Your Station</label>
             <select id="checkin-station">
                 <option value="">Select your station...</option>
-                <option value="Induct 1">Induct 1 (South)</option>
-                    <option value="Induct 2">Induct 2 (South)</option>
-                    <option value="Induct 3">Induct 3 (South)</option>
-                    <option value="Induct 4">Induct 4 (South)</option>
-                    <option value="Induct 5">Induct 5 (North)</option>
-                    <option value="Induct 6">Induct 6 (North)</option>
-                    <option value="Induct 7">Induct 7 (North)</option>
-                    <option value="Induct 8">Induct 8 (North)</option>
-                    <option value="Y-Sorter Y1">Y-Sorter Y1</option>
-                    <option value="Y-Sorter Y2">Y-Sorter Y2</option>
-                    <option value="Y-Sorter Y3">Y-Sorter Y3</option>
-                    <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                    <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
-                    <option value="Tote Replenishment">Tote Replenishment</option>
-                    <option disabled="">──────────</option>
-                    <option value="Sort Water Spider">Sort Water Spider</option>
-                    <option value="Container Builder">Container Builder / Palletizer</option>
-                    <option value="Tranship">Tranship</option>
-                    <option value="Liquid">Liquid</option>
+                <optgroup label="Induct">
+                        <option value="Induct 1">Induct 1 (South)</option>
+                        <option value="Induct 2">Induct 2 (South)</option>
+                        <option value="Induct 3">Induct 3 (South)</option>
+                        <option value="Induct 4">Induct 4 (South)</option>
+                        <option value="Induct 5">Induct 5 (North)</option>
+                        <option value="Induct 6">Induct 6 (North)</option>
+                        <option value="Induct 7">Induct 7 (North)</option>
+                        <option value="Induct 8">Induct 8 (North)</option>
+                        <option value="Y-Sorter Y1">Y-Sorter Y1</option>
+                        <option value="Y-Sorter Y2">Y-Sorter Y2</option>
+                        <option value="Y-Sorter Y3">Y-Sorter Y3</option>
+                        <option value="Y-Sorter Y4">Y-Sorter Y4</option>
+                    </optgroup>
+                    <optgroup label="Ship Dock Support">
+                        <option value="Problem Solve">Problem Solve</option>
+                        <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
+                        <option value="Tote Replenishment">Tote Replenishment</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                        <option value="Sort Water Spider">Sort Water Spider</option>
+                        <option value="Container Builder">Container Builder / Palletizer</option>
+                        <option value="Tranship">Tranship</option>
+                        <option value="Liquid">Liquid</option>
+                    </optgroup>
             </select>
         </div>
 
@@ -690,26 +695,31 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Current station</label>
             <select id="temp-station">
                 <option value="">Select station...</option>
-                <option value="Induct 1">Induct 1 (South)</option>
-                    <option value="Induct 2">Induct 2 (South)</option>
-                    <option value="Induct 3">Induct 3 (South)</option>
-                    <option value="Induct 4">Induct 4 (South)</option>
-                    <option value="Induct 5">Induct 5 (North)</option>
-                    <option value="Induct 6">Induct 6 (North)</option>
-                    <option value="Induct 7">Induct 7 (North)</option>
-                    <option value="Induct 8">Induct 8 (North)</option>
-                    <option value="Y-Sorter Y1">Y-Sorter Y1</option>
-                    <option value="Y-Sorter Y2">Y-Sorter Y2</option>
-                    <option value="Y-Sorter Y3">Y-Sorter Y3</option>
-                    <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                    <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
-                    <option value="Tote Replenishment">Tote Replenishment</option>
-                    <option disabled="">──────────</option>
-                    <option value="Sort Water Spider">Sort Water Spider</option>
-                    <option value="Container Builder">Container Builder / Palletizer</option>
-                    <option value="Tranship">Tranship</option>
-                    <option value="Liquid">Liquid</option>
+                <optgroup label="Induct">
+                        <option value="Induct 1">Induct 1 (South)</option>
+                        <option value="Induct 2">Induct 2 (South)</option>
+                        <option value="Induct 3">Induct 3 (South)</option>
+                        <option value="Induct 4">Induct 4 (South)</option>
+                        <option value="Induct 5">Induct 5 (North)</option>
+                        <option value="Induct 6">Induct 6 (North)</option>
+                        <option value="Induct 7">Induct 7 (North)</option>
+                        <option value="Induct 8">Induct 8 (North)</option>
+                        <option value="Y-Sorter Y1">Y-Sorter Y1</option>
+                        <option value="Y-Sorter Y2">Y-Sorter Y2</option>
+                        <option value="Y-Sorter Y3">Y-Sorter Y3</option>
+                        <option value="Y-Sorter Y4">Y-Sorter Y4</option>
+                    </optgroup>
+                    <optgroup label="Ship Dock Support">
+                        <option value="Problem Solve">Problem Solve</option>
+                        <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
+                        <option value="Tote Replenishment">Tote Replenishment</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                        <option value="Sort Water Spider">Sort Water Spider</option>
+                        <option value="Container Builder">Container Builder / Palletizer</option>
+                        <option value="Tranship">Tranship</option>
+                        <option value="Liquid">Liquid</option>
+                    </optgroup>
             </select>
         </div>
 
@@ -738,26 +748,31 @@ a { color: var(--color-link, var(--color-primary)); }</style>
             <label>Current station</label>
             <select id="update-station">
                 <option value="">Select station...</option>
-                <option value="Induct 1">Induct 1 (South)</option>
-                    <option value="Induct 2">Induct 2 (South)</option>
-                    <option value="Induct 3">Induct 3 (South)</option>
-                    <option value="Induct 4">Induct 4 (South)</option>
-                    <option value="Induct 5">Induct 5 (North)</option>
-                    <option value="Induct 6">Induct 6 (North)</option>
-                    <option value="Induct 7">Induct 7 (North)</option>
-                    <option value="Induct 8">Induct 8 (North)</option>
-                    <option value="Y-Sorter Y1">Y-Sorter Y1</option>
-                    <option value="Y-Sorter Y2">Y-Sorter Y2</option>
-                    <option value="Y-Sorter Y3">Y-Sorter Y3</option>
-                    <option value="Y-Sorter Y4">Y-Sorter Y4</option>
-                    <option value="Problem Solve">Problem Solve</option>
-                    <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
-                    <option value="Tote Replenishment">Tote Replenishment</option>
-                    <option disabled="">──────────</option>
-                    <option value="Sort Water Spider">Sort Water Spider</option>
-                    <option value="Container Builder">Container Builder / Palletizer</option>
-                    <option value="Tranship">Tranship</option>
-                    <option value="Liquid">Liquid</option>
+                <optgroup label="Induct">
+                        <option value="Induct 1">Induct 1 (South)</option>
+                        <option value="Induct 2">Induct 2 (South)</option>
+                        <option value="Induct 3">Induct 3 (South)</option>
+                        <option value="Induct 4">Induct 4 (South)</option>
+                        <option value="Induct 5">Induct 5 (North)</option>
+                        <option value="Induct 6">Induct 6 (North)</option>
+                        <option value="Induct 7">Induct 7 (North)</option>
+                        <option value="Induct 8">Induct 8 (North)</option>
+                        <option value="Y-Sorter Y1">Y-Sorter Y1</option>
+                        <option value="Y-Sorter Y2">Y-Sorter Y2</option>
+                        <option value="Y-Sorter Y3">Y-Sorter Y3</option>
+                        <option value="Y-Sorter Y4">Y-Sorter Y4</option>
+                    </optgroup>
+                    <optgroup label="Ship Dock Support">
+                        <option value="Problem Solve">Problem Solve</option>
+                        <option value="Flats Water Spider">Flats Water Spider (incl. Direct Load &amp; Close)</option>
+                        <option value="Tote Replenishment">Tote Replenishment</option>
+                    </optgroup>
+                    <optgroup label="Other">
+                        <option value="Sort Water Spider">Sort Water Spider</option>
+                        <option value="Container Builder">Container Builder / Palletizer</option>
+                        <option value="Tranship">Tranship</option>
+                        <option value="Liquid">Liquid</option>
+                    </optgroup>
             </select>
         </div>
 
