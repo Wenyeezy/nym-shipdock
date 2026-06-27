@@ -232,7 +232,12 @@
 
             // Helper: get leave time from any entry (handles different field names)
             function getLeaveTime(e) {
-                return e.LeaveTime || e.newLeaveTime || e.NewLeaveTime || e.leaveTime || '';
+                // For update entries, leave time is stored in Plan field
+                var time = e.LeaveTime || e.newLeaveTime || e.NewLeaveTime || e.leaveTime || '';
+                if (!time && e.Plan && (e.Plan.indexOf('AM') !== -1 || e.Plan.indexOf('PM') !== -1)) {
+                    time = e.Plan;
+                }
+                return time;
             }
 
             // Station group order (matches dropdown)
