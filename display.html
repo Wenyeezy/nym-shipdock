@@ -1,9 +1,10 @@
+```xml
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYM — Ship Dock | Live Display</title>
+    <title>DockPulse — Ship Dock | Live Display</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -131,7 +132,7 @@
 </head>
 <body>
     <div class="top-bar">
-        <h1>☀️ NYM <span>Ship Dock</span> — MDW7</h1>
+        <h1>☀️ DockPulse <span>Ship Dock</span> — MDW7</h1>
         <div class="clock" id="clock"></div>
     </div>
 
@@ -244,7 +245,7 @@
             var stationGroups = {
                 'Induct': ['Induct 1', 'Induct 2', 'Induct 3', 'Induct 4', 'Induct 5', 'Induct 6', 'Induct 7', 'Induct 8', 'Y-Sorter Y1', 'Y-Sorter Y2', 'Y-Sorter Y3', 'Y-Sorter Y4'],
                 'Ship Dock Support': ['Problem Solve', 'Flats Water Spider', 'Tote Replenishment'],
-                'Other': ['Sort Water Spider', 'Container Builder', 'Tranship', 'Liquid']
+                'Other': ['Sort Water Spider', 'Container Builder', 'Tranship', 'Collector', 'Liquid']
             };
             function getStationGroup(station) {
                 for (var g in stationGroups) {
@@ -386,3 +387,4 @@
     </script>
 </body>
 </html>
+```
