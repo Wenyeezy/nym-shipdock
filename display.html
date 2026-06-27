@@ -1,3 +1,4 @@
+```xml
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -230,6 +231,24 @@
                 try { return new Date(e.Timestamp).toDateString() === today; } catch(x) { return false; }
             });
 
+            // Helper: get leave time from any entry (handles different field names)
+            function getLeaveTime(e) {
+                return e.LeaveTime || e.newLeaveTime || e.NewLeaveTime || e.leaveTime || '';
+            }
+
+            // Station group order (matches dropdown)
+            var stationGroups = {
+                'Induct': ['Induct 1', 'Induct 2', 'Induct 3', 'Induct 4', 'Induct 5', 'Induct 6', 'Induct 7', 'Induct 8', 'Y-Sorter Y1', 'Y-Sorter Y2', 'Y-Sorter Y3', 'Y-Sorter Y4'],
+                'Ship Dock Support': ['Problem Solve', 'Flats Water Spider', 'Tote Replenishment'],
+                'Other': ['Sort Water Spider', 'Container Builder', 'Tranship', 'Liquid']
+            };
+            function getStationGroup(station) {
+                for (var g in stationGroups) {
+                    if (stationGroups[g].indexOf(station) !== -1) return g;
+                }
+                return 'Other';
+            }
+
             // Buffer: treat update/temp_leave as implicit check-in if no prior checkin exists for that login
             var checkinLogins = {};
             todayEntries.forEach(function(e) {
@@ -240,7 +259,7 @@
             todayEntries.forEach(function(e) {
                 if (!checkinLogins[e.Login] && e.Login && (e.Type === 'update' || e.Type === 'temp_leave')) {
                     if (!implicitCheckins.find(function(ic) { return ic.Login === e.Login; })) {
-                        implicitCheckins.push({ Type: 'checkin', Login: e.Login, Station: e.Station || 'Unknown', Plan: e.Plan || 'unknown', LeaveTime: e.LeaveTime || '', Timestamp: e.Timestamp });
+                        implicitCheckins.push({ Type: 'checkin', Login: e.Login, Station: e.Station || 'Unknown', Plan: e.Plan || 'unknown', LeaveTime: getLeaveTime(e), Timestamp: e.Timestamp });
                     }
                 }
             });
@@ -263,11 +282,11 @@
                 if (!personStatus[e.Login]) personStatus[e.Login] = { station: 'Unknown', leaveTime: '', status: 'active' };
                 if (e.Type === 'checkin') {
                     personStatus[e.Login].station = e.Station || personStatus[e.Login].station;
-                    personStatus[e.Login].leaveTime = e.LeaveTime || '';
+                    personStatus[e.Login].leaveTime = getLeaveTime(e) || personStatus[e.Login].leaveTime;
                     personStatus[e.Login].status = 'active';
                 }
                 if (e.Type === 'update') {
-                    personStatus[e.Login].leaveTime = e.LeaveTime || e.newLeaveTime || '';
+                    personStatus[e.Login].leaveTime = getLeaveTime(e) || personStatus[e.Login].leaveTime;
                     if (e.Station) personStatus[e.Login].station = e.Station;
                 }
                 if (e.Type === 'temp_leave') {
@@ -292,8 +311,26 @@
                     if (!stations[s]) stations[s] = [];
                     stations[s].push({ login: login, leaveTime: p.leaveTime, status: p.status });
                 });
+
+                // Sort stations by group order
+                var groupOrder = ['Induct', 'Ship Dock Support', 'Other'];
+                var sortedStations = Object.keys(stations).sort(function(a, b) {
+                    var ga = getStationGroup(a);
+                    var gb = getStationGroup(b);
+                    var ia = groupOrder.indexOf(ga);
+                    var ib = groupOrder.indexOf(gb);
+                    if (ia !== ib) return ia - ib;
+                    return a.localeCompare(b);
+                });
+
                 var gridHtml = '';
-                Object.keys(stations).sort().forEach(function(s) {
+                var lastGroup = '';
+                sortedStations.forEach(function(s) {
+                    var group = getStationGroup(s);
+                    if (group !== lastGroup) {
+                        gridHtml += '<div style="grid-column:1/-1;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:12px;padding-bottom:4px;border-bottom:1px solid #334155;">' + group + '</div>';
+                        lastGroup = group;
+                    }
                     var people = stations[s].map(function(p) {
                         var cls = p.status === 'away' ? 'status-away' : '';
                         var timeStr = p.leaveTime ? '<span class="leave-time">(' + p.leaveTime + ')</span>' : '';
