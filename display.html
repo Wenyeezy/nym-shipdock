@@ -276,7 +276,12 @@
 
             // Build per-person status map (latest state for each login)
             var personStatus = {};
-            todayEntries.concat(implicitCheckins).forEach(function(e) {
+            // Sort entries by timestamp to ensure chronological processing
+            var sortedEntries = todayEntries.concat(implicitCheckins).slice().sort(function(a, b) {
+                try { return new Date(a.Timestamp) - new Date(b.Timestamp); }
+                catch(x) { return 0; }
+            });
+            sortedEntries.forEach(function(e) {
                 if (!e.Login) return;
                 if (!personStatus[e.Login]) personStatus[e.Login] = { station: 'Unknown', leaveTime: '', status: 'active' };
                 if (e.Type === 'checkin') {
@@ -285,8 +290,11 @@
                     personStatus[e.Login].status = 'active';
                 }
                 if (e.Type === 'update') {
-                    personStatus[e.Login].leaveTime = getLeaveTime(e) || personStatus[e.Login].leaveTime;
+                    // Update ALWAYS overwrites leave time (this is the whole point of update)
+                    var newTime = getLeaveTime(e);
+                    if (newTime) personStatus[e.Login].leaveTime = newTime;
                     if (e.Station) personStatus[e.Login].station = e.Station;
+                    if (e.newStation) personStatus[e.Login].station = e.newStation;
                 }
                 if (e.Type === 'temp_leave') {
                     personStatus[e.Login].status = 'away';
@@ -373,4 +381,3 @@
     </script>
 </body>
 </html>
-```
